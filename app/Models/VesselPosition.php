@@ -6,14 +6,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-final class VesselTrack extends Model
+final class VesselPosition extends Model
 {
     /** {@inheritdoc} */
     public $timestamps = false;
 
     /** {@inheritdoc} */
     protected $guarded = [];
-    
+
     /** {@inheritdoc} */
-    protected $table = 'vessels_tracks';
+    protected $table = 'vessels_positions';
 }

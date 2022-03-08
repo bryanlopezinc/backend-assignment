@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\VesselTrack;
+use App\Models\VesselPosition;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\LazyCollection;
 
-class VesselTracksSeeder extends Seeder
+class VesselsPositionsSeeder extends Seeder
 {
     public function run(): void
     {
@@ -30,7 +30,7 @@ class VesselTracksSeeder extends Seeder
                 'timestamp'    => $shipPosition['timestamp']
             ]);
 
-            VesselTrack::insert($shipsPositions->all());
+            VesselPosition::insert($shipsPositions->all());
         });
     }
 }

@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('vessels_tracks', function (Blueprint $table) {
+        Schema::create('vessels_positions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('vessel_id')->index();
             $table->boolean('status');
