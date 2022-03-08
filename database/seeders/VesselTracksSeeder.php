@@ -18,7 +18,7 @@ class VesselTracksSeeder extends Seeder
 
         $shipsPositionsData->chunk(100)->each(function (LazyCollection $chunk): void {
             $shipsPositions = $chunk->map(fn (array $shipPosition): array => [
-                'mmsi'         => $shipPosition['mmsi'],
+                'vessel_id'    => $shipPosition['mmsi'],
                 'status'       => $shipPosition['status'],
                 'station_id'   => $shipPosition['stationId'],
                 'speed'        => $shipPosition['speed'],

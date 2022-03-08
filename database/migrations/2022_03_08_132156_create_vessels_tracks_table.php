@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('vessels_tracks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('mmsi')->index();
+            $table->unsignedBigInteger('vessel_id')->index();
             $table->boolean('status');
             $table->unsignedBigInteger('station_id');
             $table->unsignedInteger('speed')->unsigned();
