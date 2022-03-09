@@ -24,10 +24,21 @@ class FetchVesselsTracksTest extends TestCase
         $this->getTestResponse(['mmsi' => '23,-1'])->assertUnprocessable()->assertJsonValidationErrorFor('mmsi.1');
     }
 
+    public function testWillReturnValidationErrorsIfCoordinatesAttributesAreInvalid(): void
+    {
+        $this->getTestResponse(['lon' => '15.44150000'])->assertUnprocessable()->assertJsonValidationErrorFor('lat');
+        $this->getTestResponse(['lat' => '15.44150000'])->assertUnprocessable()->assertJsonValidationErrorFor('lon');
+    }
+
     public function testWillReturnVesselTracksWithSpecifiedMmsi(): void
     {
         $this->getTestResponse(['mmsi' => '247039300'])->assertSuccessful()->assertJsonCount(869, 'data');
         $this->getTestResponse(['mmsi' => '50'])->assertSuccessful()->assertJsonCount(0, 'data');
         $this->getTestResponse(['mmsi' => '247039300,311486000'])->assertSuccessful()->assertJsonCount(1729, 'data');
+    }
+
+    public function testWillReturnVesselTracksWithinCoordinates(): void
+    {
+        $this->getTestResponse(['lat' => '42.75178000', 'lon' => '15.44150000'])->assertSuccessful()->assertJsonCount(176, 'data');
     }
 }
