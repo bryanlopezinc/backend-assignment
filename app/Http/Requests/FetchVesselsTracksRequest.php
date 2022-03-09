@@ -18,6 +18,8 @@ final class FetchVesselsTracksRequest extends FormRequest
             'mmsi.*' => ['int', 'min:1'],
             'lon'    => [new RequiredIf($this->has('lat')), 'string'],
             'lat'    => [new RequiredIf($this->has('lon')), 'string'],
+            'from'   => [new RequiredIf($this->has('to')), 'int'],
+            'to'     => [new RequiredIf($this->has('from')), 'int', 'gt:from']
         ];
     }
 

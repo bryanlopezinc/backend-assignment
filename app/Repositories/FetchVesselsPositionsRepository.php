@@ -25,8 +25,12 @@ final class FetchVesselsPositionsRepository
             $query->whereIn('vessel_id', array_map(fn (ResourceId $vesselId) => $vesselId->value, $filters->vesselIds));
         }
 
-        if ($filters->wantsVesselsWithinSpecificRange) {
+        if ($filters->hasRange) {
             $query->where('latitude', '>=', $filters->range->latitude)->where('longitude', '<=', $filters->range->longitude);
+        }
+
+        if ($filters->hasTimeInterval) {
+            $query->whereBetween('timestamp', [$filters->fromTime, $filters->toTime]);
         }
 
         return $query->get()->map(fn (Model $model) => VesselPositionBuilder::fromModel($model)->build())->all();

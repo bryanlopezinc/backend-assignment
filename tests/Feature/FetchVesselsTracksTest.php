@@ -30,6 +30,13 @@ class FetchVesselsTracksTest extends TestCase
         $this->getTestResponse(['lat' => '15.44150000'])->assertUnprocessable()->assertJsonValidationErrorFor('lon');
     }
 
+    public function testWillReturnValidationErrorsIfTimeAttributesAreInvalid(): void
+    {
+        $this->getTestResponse(['from' => 1372700520])->assertUnprocessable()->assertJsonValidationErrorFor('to');
+        $this->getTestResponse(['to' => 1372700520])->assertUnprocessable()->assertJsonValidationErrorFor('from');
+        $this->getTestResponse(['from' => now()->timestamp, 'to' => now()->subDay()->timestamp])->assertUnprocessable()->assertJsonValidationErrorFor('to');
+    }
+
     public function testWillReturnVesselTracksWithSpecifiedMmsi(): void
     {
         $this->getTestResponse(['mmsi' => '247039300'])->assertSuccessful()->assertJsonCount(869, 'data');
@@ -40,5 +47,10 @@ class FetchVesselsTracksTest extends TestCase
     public function testWillReturnVesselTracksWithinCoordinates(): void
     {
         $this->getTestResponse(['lat' => '42.75178000', 'lon' => '15.44150000'])->assertSuccessful()->assertJsonCount(176, 'data');
+    }
+
+    public function testWillReturnVesselTracksWithinTimeInterval(): void
+    {
+        $this->getTestResponse(['from' => 1372700520, 'to' => 1372700580])->assertSuccessful()->assertJsonCount(496, 'data');
     }
 }
