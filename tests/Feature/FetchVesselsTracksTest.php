@@ -7,14 +7,19 @@ use Tests\TestCase;
 
 class FetchVesselsTracksTest extends TestCase
 {
-    private function getTestResponse(array $query = []): TestResponse
+    private function getTestResponse(array $query = [], array $headers = []): TestResponse
     {
-        return $this->getJson(route('fetchVesselsTracks', $query));
+        return $this->getJson(route('fetchVesselsTracks', $query), $headers);
     }
 
     public function testWillReturnAllVesselsTracks(): void
     {
-       $this->getTestResponse()->assertSuccessful()->assertJsonCount(2696, 'data');
+        $this->getTestResponse()->assertSuccessful()->assertJsonCount(2696, 'data');
+    }
+
+    public function testWillReturnAllVesselsTracksInXmlFormart(): void
+    {
+        $this->getTestResponse(headers: ['Content-Type' => 'application/xml'])->assertSuccessful()->assertHeader('Content-Type', 'application/xml');
     }
 
     public function testWillReturnValidationErrorIfMmsiAttributeIsInvalid(): void
