@@ -8,7 +8,7 @@ use App\DataTransferObjects\VesselTracksRequestData;
 use App\Http\Requests\FetchVesselsTracksRequest;
 use App\Http\Resources\Csv\ResourceCollection as CsvResourceCollection;
 use App\Http\Resources\Json\VesselPositionResource;
-use App\Http\Resources\Xml\VesselsResourceCollection;
+use App\Http\Resources\Xml\ResourceCollection as XmlResourceCollection;
 use App\Repositories\FetchVesselsPositionsRepository;
 use Illuminate\Contracts\Support\Responsable;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -20,7 +20,7 @@ final class FetchVesselTracksController
         $vesselsPositions = $repository->get(new VesselTracksRequestData($request));
 
         return match ($this->getAcceptableContentTypeFrom($request)) {
-            'xml' => new VesselsResourceCollection($vesselsPositions),
+            'xml' => new XmlResourceCollection($vesselsPositions),
             'csv' => $this->getCsvResponse($vesselsPositions),
             default => VesselPositionResource::collection($vesselsPositions)
         };

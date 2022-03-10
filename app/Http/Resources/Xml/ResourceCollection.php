@@ -7,7 +7,7 @@ namespace App\Http\Resources\Xml;
 use App\DataTransferObjects\VesselPosition;
 use Illuminate\Contracts\Support\Responsable;
 
-final class VesselsResourceCollection implements Responsable
+final class ResourceCollection implements Responsable
 {
     /**
      * @param array<VesselPosition> $vesselsPositions
