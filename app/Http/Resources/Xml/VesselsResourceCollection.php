@@ -16,6 +16,9 @@ final class VesselsResourceCollection implements Responsable
     {
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function toResponse($request)
     {
         return response($this->toXml()->asXML())->withHeaders(['Content-Type' => 'application/xml']);

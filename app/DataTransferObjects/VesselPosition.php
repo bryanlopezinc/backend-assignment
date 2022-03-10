@@ -21,7 +21,7 @@ final class VesselPosition
     public readonly bool $hasRateOfTurnData;
     public readonly int $timestamp;
 
-    public function __construct(private readonly array $atrributes)
+    public function __construct(array $atrributes)
     {
         foreach ($atrributes as $key => $atrribute) {
             if (property_exists($this, $key)) {

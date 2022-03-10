@@ -13,11 +13,9 @@ use App\DataTransferObjects\VesselTracksRequestData;
 final class FetchVesselsPositionsRepository
 {
     /**
-     * @param array<ResourceId> $vesselIds
-     *
      * @return array<VesselPosition>
      */
-    public function get(VesselTracksRequestData $filters)
+    public function get(VesselTracksRequestData $filters): array
     {
         $query = Model::query();
 

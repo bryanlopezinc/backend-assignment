@@ -18,7 +18,7 @@ final class VesselTracksRequestData
     public readonly int $fromTime;
     public readonly int $toTime;
 
-    public function __construct(private FetchVesselsTracksRequest $request)
+    public function __construct(FetchVesselsTracksRequest $request)
     {
         $this->vesselsIds = array_map(fn (int $vesselId) => new ResourceId($vesselId), $request->validated('mmsi', []));
 
