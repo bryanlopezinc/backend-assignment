@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\DataTransferObjects\FetchVesselTracksRequestData;
+use App\DataTransferObjects\VesselTracksRequestData;
 use App\Http\Requests\FetchVesselsTracksRequest;
 use App\Http\Resources\Csv\VesselsResourceCollection as CsvResourceCollection;
 use App\Http\Resources\Json\VesselPositionResource;
@@ -17,7 +17,7 @@ final class FetchVesselTracksController
 {
     public function __invoke(FetchVesselsTracksRequest $request, FetchVesselsPositionsRepository $repository): Responsable|StreamedResponse
     {
-        $vesselsPositions = $repository->get(new FetchVesselTracksRequestData($request));
+        $vesselsPositions = $repository->get(new VesselTracksRequestData($request));
 
         return match ($this->getAcceptableContentTypeFrom($request)) {
             'xml' => new VesselsResourceCollection($vesselsPositions),

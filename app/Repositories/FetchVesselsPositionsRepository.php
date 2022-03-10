@@ -8,7 +8,7 @@ use App\ValueObjects\ResourceId;
 use App\Models\VesselPosition as Model;
 use App\DataTransferObjects\VesselPosition;
 use App\DataTransferObjects\Builders\VesselPositionBuilder;
-use App\DataTransferObjects\FetchVesselTracksRequestData;
+use App\DataTransferObjects\VesselTracksRequestData;
 
 final class FetchVesselsPositionsRepository
 {
@@ -17,12 +17,12 @@ final class FetchVesselsPositionsRepository
      *
      * @return array<VesselPosition>
      */
-    public function get(FetchVesselTracksRequestData $filters)
+    public function get(VesselTracksRequestData $filters)
     {
         $query = Model::query();
 
-        if (filled($filters->vesselIds)) {
-            $query->whereIn('vessel_id', array_map(fn (ResourceId $vesselId) => $vesselId->value, $filters->vesselIds));
+        if (filled($filters->vesselsIds)) {
+            $query->whereIn('vessel_id', array_map(fn (ResourceId $vesselId) => $vesselId->value, $filters->vesselsIds));
         }
 
         if ($filters->hasRange) {

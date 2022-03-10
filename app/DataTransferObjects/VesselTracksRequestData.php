@@ -8,10 +8,10 @@ use App\Http\Requests\FetchVesselsTracksRequest;
 use App\ValueObjects\Coordinates;
 use App\ValueObjects\ResourceId;
 
-final class FetchVesselTracksRequestData
+final class VesselTracksRequestData
 {
     /** @var array<ResourceId> */
-    public readonly array $vesselIds;
+    public readonly array $vesselsIds;
     public readonly Coordinates $range;
     public readonly bool $hasRange;
     public readonly bool $hasTimeInterval;
@@ -20,7 +20,7 @@ final class FetchVesselTracksRequestData
 
     public function __construct(private FetchVesselsTracksRequest $request)
     {
-        $this->vesselIds = array_map(fn (int $vesselId) => new ResourceId($vesselId), $request->validated('mmsi', []));
+        $this->vesselsIds = array_map(fn (int $vesselId) => new ResourceId($vesselId), $request->validated('mmsi', []));
 
         $this->hasRange = $request->has(['lon', 'lat']);
         $this->hasTimeInterval = $request->has(['from', 'to']);
