@@ -17,9 +17,18 @@ class FetchVesselsTracksTest extends TestCase
         $this->getTestResponse()->assertSuccessful()->assertJsonCount(2696, 'data');
     }
 
-    public function testWillReturnAllVesselsTracksInXmlFormart(): void
+    public function testWillReturnVesselsTracksInXmlFormart(): void
     {
-        $this->getTestResponse(headers: ['Content-Type' => 'application/xml'])->assertSuccessful()->assertHeader('Content-Type', 'application/xml');
+        $this->getTestResponse(headers: ['accept' => 'application/xml'])
+            ->assertSuccessful()
+            ->assertHeader('Content-Type', 'application/xml');
+    }
+
+    public function testWillReturnVesselsTracksInCsvFormart(): void
+    {
+        $this->getTestResponse(headers: ['accept' => 'text/csv;'])
+            ->assertSuccessful()
+            ->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
     }
 
     public function testWillReturnValidationErrorIfMmsiAttributeIsInvalid(): void

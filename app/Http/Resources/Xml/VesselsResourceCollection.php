@@ -23,29 +23,29 @@ final class VesselsResourceCollection implements Responsable
 
     public function toXml(): \SimpleXMLElement
     {
-        $xml = new \SimpleXMLElement('<root></root>');
-
-        $xml->addChild('data');
+        $xml = new \SimpleXMLElement('<data></data>');
 
         foreach ($this->vesselsPositions as $vesselPosition) {
-            $xml->data->addChild('type', 'vessel_position');
-            $xml->data->addChild('attributes');
-            $xml->data->attributes->addChild('mmsi', (string) $vesselPosition->vesselId->value);
-            $xml->data->attributes->addChild('status', (string) $vesselPosition->status);
-            $xml->data->attributes->addChild('statationId', (string) $vesselPosition->stationId->value);
-            $xml->data->attributes->addChild('speed', (string) $vesselPosition->speed);
-            $xml->data->attributes->addChild('coordinates');
-            $xml->data->attributes->coordinates->addChild('longitude', $vesselPosition->coordinates->longitude);
-            $xml->data->attributes->coordinates->addChild('latitude', $vesselPosition->coordinates->latitude);
-            $xml->data->attributes->addChild('course', (string) $vesselPosition->course);
-            $xml->data->attributes->addChild('heading', (string) $vesselPosition->heading);
+            $attributes = $xml->addChild('vesselPosition');
+
+            $attributes->addChild('mmsi', (string) $vesselPosition->vesselId->value);
+            $attributes->addChild('status', (string) $vesselPosition->status);
+            $attributes->addChild('statationId', (string) $vesselPosition->stationId->value);
+            $attributes->addChild('speed', (string) $vesselPosition->speed);
+
+            $coordinates = $attributes->addChild('coordinates');
+            $coordinates->addChild('longitude', $vesselPosition->coordinates->longitude);
+            $coordinates->addChild('latitude', $vesselPosition->coordinates->latitude);
+
+            $attributes->addChild('course', (string) $vesselPosition->course);
+            $attributes->addChild('heading', (string) $vesselPosition->heading);
 
             if ($vesselPosition->hasRateOfTurnData) {
-                $xml->data->attributes->addChild('rateOfTurn', (string) $vesselPosition->rateOfTurn);
+                $attributes->addChild('rateOfTurn', (string) $vesselPosition->rateOfTurn);
             }
 
-            $xml->data->attributes->addChild('hasRateOfTurn', $vesselPosition->hasRateOfTurnData ? 'true' : 'false');
-            $xml->data->attributes->addChild('timestamp', (string) $vesselPosition->timestamp);
+            $attributes->addChild('hasRateOfTurn', $vesselPosition->hasRateOfTurnData ? 'true' : 'false');
+            $attributes->addChild('timestamp', (string) $vesselPosition->timestamp);
         }
 
         return $xml;
