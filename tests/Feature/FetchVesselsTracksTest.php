@@ -17,17 +17,20 @@ class FetchVesselsTracksTest extends TestCase
         $this->getTestResponse()->assertSuccessful()->assertJsonCount(2696, 'data');
     }
 
-    public function testWillReturnVesselsTracksInXmlFormart(): void
+    public function testWillReturnVesselsTracksInXmlFormat(): void
     {
-        $this->getTestResponse(headers: ['accept' => 'application/xml'])
+        $response = $this->getTestResponse(headers: ['accept' => 'application/xml'])
             ->assertSuccessful()
             ->assertHeader('Content-Type', 'application/xml');
+
+        $this->assertStringStartsWith('<?xml version="1.0"?>', $response->baseResponse->content());
     }
 
-    public function testWillReturnVesselsTracksInCsvFormart(): void
+    public function testWillReturnVesselsTracksInCsvFormat(): void
     {
         $this->getTestResponse(headers: ['accept' => 'text/csv;'])
             ->assertSuccessful()
+            ->assertDownload('vesselsPositions.csv')
             ->assertHeader('Content-Type', 'text/csv; charset=UTF-8');
     }
 
