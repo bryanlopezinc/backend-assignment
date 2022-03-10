@@ -24,7 +24,7 @@ return new class extends Migration
             $table->unsignedInteger('course');
             $table->unsignedInteger('heading');
             $table->integer('rate_of_turn')->nullable()->default(null);
-            $table->unsignedInteger('timestamp');
+            $table->unsignedInteger('timestamp')->index();
         });
     }
 
