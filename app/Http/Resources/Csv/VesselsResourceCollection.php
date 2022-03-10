@@ -39,7 +39,7 @@ final class VesselsResourceCollection
         foreach ($this->vesselsPositions as $vesselPosition) {
             $writer->insertOne([
                 'MMSI'         => $vesselPosition->vesselId->value,
-                'Status'       => $vesselPosition->status,
+                'Status'       => $vesselPosition->status->value,
                 'StationId'    => $vesselPosition->stationId->value,
                 'Speed'        => $vesselPosition->speed,
                 'Longitude'    => $vesselPosition->coordinates->longitude,

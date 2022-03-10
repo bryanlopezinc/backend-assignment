@@ -8,6 +8,7 @@ use App\DataTransferObjects\VesselPosition;
 use App\Models\VesselPosition as Model;
 use App\ValueObjects\Coordinates;
 use App\ValueObjects\ResourceId;
+use App\ValueObjects\Status;
 
 final class VesselPositionBuilder
 {
@@ -20,7 +21,7 @@ final class VesselPositionBuilder
         $attributes = [];
 
         $attributes['vesselId'] = new ResourceId($model['vessel_id']);
-        $attributes['status'] = $model['status'];
+        $attributes['status'] = new Status($model['status']);
         $attributes['stationId'] = new ResourceId($model['station_id']);
         $attributes['speed'] = $model['speed'];
         $attributes['coordinates'] = new Coordinates($model['latitude'], $model['longitude']);

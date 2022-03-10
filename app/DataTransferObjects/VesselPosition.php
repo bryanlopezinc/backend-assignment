@@ -6,11 +6,12 @@ namespace App\DataTransferObjects;
 
 use App\ValueObjects\Coordinates;
 use App\ValueObjects\ResourceId;
+use App\ValueObjects\Status;
 
 final class VesselPosition
 {
     public readonly ResourceId $vesselId;
-    public readonly int $status;
+    public readonly Status $status;
     public readonly ResourceId $stationId;
     public readonly int $speed;
     public readonly Coordinates $coordinates;

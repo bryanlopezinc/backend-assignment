@@ -29,7 +29,7 @@ final class VesselsResourceCollection implements Responsable
             $attributes = $xml->addChild('vesselPosition');
 
             $attributes->addChild('mmsi', (string) $vesselPosition->vesselId->value);
-            $attributes->addChild('status', (string) $vesselPosition->status);
+            $attributes->addChild('status', (string) $vesselPosition->status->value);
             $attributes->addChild('statationId', (string) $vesselPosition->stationId->value);
             $attributes->addChild('speed', (string) $vesselPosition->speed);
 
