@@ -6,7 +6,7 @@ namespace App\Http\Controllers;
 
 use App\DataTransferObjects\VesselTracksRequestData;
 use App\Http\Requests\FetchVesselsTracksRequest;
-use App\Http\Resources\Csv\VesselsResourceCollection as CsvResourceCollection;
+use App\Http\Resources\Csv\ResourceCollection as CsvResourceCollection;
 use App\Http\Resources\Json\VesselPositionResource;
 use App\Http\Resources\Xml\VesselsResourceCollection;
 use App\Repositories\FetchVesselsPositionsRepository;
@@ -21,7 +21,7 @@ final class FetchVesselTracksController
 
         return match ($this->getAcceptableContentTypeFrom($request)) {
             'xml' => new VesselsResourceCollection($vesselsPositions),
-            'csv' => response()->streamDownload(new CsvResourceCollection($vesselsPositions), 'vesselsPositions.csv', headers: ['Content-Type' => 'text/csv']),
+            'csv' => $this->getCsvResponse($vesselsPositions),
             default => VesselPositionResource::collection($vesselsPositions)
         };
     }
@@ -39,5 +39,14 @@ final class FetchVesselTracksController
             'application/xml' => 'xml',
             default => ''
         };
+    }
+
+    private function getCsvResponse(array $vesselsPositions): StreamedResponse
+    {
+        return response()->streamDownload(
+            \Closure::fromCallable(new CsvResourceCollection($vesselsPositions)),
+            'vesselsPositions.csv',
+            ['Content-Type' => 'text/csv']
+        );
     }
 }

@@ -7,20 +7,20 @@ namespace App\Http\Resources\Csv;
 use App\DataTransferObjects\VesselPosition;
 use League\Csv\Writer;
 
-final class VesselsResourceCollection
+final class ResourceCollection
 {
     /**
      * @param array<VesselPosition> $vesselsPositions
      */
-    public function __construct(private array $vesselsPositions)
+    public function __construct(private readonly array $vesselsPositions)
     {
     }
 
-    public function __invoke()
+    public function __invoke(): void
     {
         $writer = Writer::createFromPath('php://temp');
 
-        $headers = [
+        $writer->insertOne([
             'MMSI',
             'Status',
             'StationId',
@@ -32,9 +32,7 @@ final class VesselsResourceCollection
             'RateOfTurn',
             'HasRateOfTurnData',
             'Timestamp'
-        ];
-
-        $writer->insertOne($headers);
+        ]);
 
         foreach ($this->vesselsPositions as $vesselPosition) {
             $writer->insertOne([
