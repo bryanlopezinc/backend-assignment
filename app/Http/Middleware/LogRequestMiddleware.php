@@ -8,7 +8,7 @@ use Closure;
 use Psr\Log\LoggerInterface;
 use Ramsey\Uuid\Uuid;
 
-final class RequestLoggerMiddleware
+final class LogRequestMiddleware
 {
     public function __construct(private LoggerInterface $logger)
     {
