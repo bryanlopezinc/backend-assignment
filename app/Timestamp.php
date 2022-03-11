@@ -14,6 +14,6 @@ final class Timestamp
 
     public function toDate(): string
     {
-        return Carbon::createFromTimestamp($this->value)->toDateString();
+        return Carbon::createFromTimestamp($this->value)->toDateTimeString();
     }
 }

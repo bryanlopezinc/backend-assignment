@@ -27,7 +27,7 @@ class ResourceCollectionTest extends TestCase
             $vesselPosition->heading,
             $vesselPosition->rateOfTurn,
             'false',
-            $vesselPosition->timestamp->toDate()
+            '"' . $vesselPosition->timestamp->toDate() . '"'
         ]);
 
         $this->assertStringMatchesFormat(

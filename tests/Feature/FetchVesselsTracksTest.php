@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use App\Timestamp;
+use Carbon\Carbon;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -62,7 +64,7 @@ class FetchVesselsTracksTest extends TestCase
     {
         $this->getTestResponse(['from' => 1372700520])->assertUnprocessable()->assertJsonValidationErrorFor('to');
         $this->getTestResponse(['to' => 1372700520])->assertUnprocessable()->assertJsonValidationErrorFor('from');
-        $this->getTestResponse(['from' => now()->timestamp, 'to' => now()->subDay()->timestamp])->assertUnprocessable()->assertJsonValidationErrorFor('to');
+        $this->getTestResponse(['from' => now()->toDateString(), 'to' => now()->subDay()->toDateString()])->assertUnprocessable()->assertJsonValidationErrorFor('to');
     }
 
     public function testWillReturnVesselTracksWithSpecifiedMmsi(): void
@@ -84,6 +86,9 @@ class FetchVesselsTracksTest extends TestCase
 
     public function testWillReturnVesselTracksWithinTimeInterval(): void
     {
-        $this->getTestResponse(['from' => 1372700520, 'to' => 1372700580])->assertSuccessful()->assertJsonCount(496, 'data');
+        $this->getTestResponse([
+            'from' => Carbon::createFromTimestamp(1372700520)->toDateTimeString(),
+            'to' => Carbon::createFromTimestamp(1372700580)->toDateTimeString()
+        ])->assertSuccessful()->assertJsonCount(496, 'data');
     }
 }

@@ -13,6 +13,7 @@ final class FetchVesselsTracksRequest extends FormRequest
     public function rules(): array
     {
         $coordinateRules = ['string', new CoordinateRule];
+        $dateRules = ['date', 'date_format:Y-m-d H:i:s'];
 
         return [
             'mmsi.*'   => ['int', 'min:1'],
@@ -20,8 +21,8 @@ final class FetchVesselsTracksRequest extends FormRequest
             'lon_max'  => [...$coordinateRules, 'required_with:lon_min,lat_min,lat_max'],
             'lat_min'  => [...$coordinateRules, 'required_with:lon_min,lon_max,lat_max',],
             'lat_max'  => [...$coordinateRules, 'required_with:lon_min,lon_max,lat_min',],
-            'from'     => [new RequiredIf($this->has('to')), 'int'],
-            'to'       => [new RequiredIf($this->has('from')), 'int', 'gt:from']
+            'from'     => [new RequiredIf($this->has('to')), ...$dateRules],
+            'to'       => [new RequiredIf($this->has('from')), 'after_or_equal:from', ...$dateRules]
         ];
     }
 

@@ -8,6 +8,7 @@ use App\Http\Requests\FetchVesselsTracksRequest;
 use App\ValueObjects\Latitude;
 use App\ValueObjects\Longitude;
 use App\ValueObjects\ResourceId;
+use Carbon\Carbon;
 
 final class VesselTracksRequestData
 {
@@ -19,8 +20,8 @@ final class VesselTracksRequestData
     public readonly Longitude $maxLongitude;
     public readonly bool $hasRange;
     public readonly bool $hasTimeInterval;
-    public readonly int $fromTime;
-    public readonly int $toTime;
+    public readonly Carbon $fromTime;
+    public readonly Carbon $toTime;
 
     public function __construct(FetchVesselsTracksRequest $request)
     {
@@ -37,7 +38,8 @@ final class VesselTracksRequestData
         }
 
         if ($this->hasTimeInterval) {
-            [$this->fromTime, $this->toTime] = [(int)$request->validated('from'), (int)$request->validated('to')];
+            $this->fromTime = Carbon::parse($request->validated('from'));
+            $this->toTime = Carbon::parse($request->validated('to'));
         }
     }
 }
