@@ -9,7 +9,6 @@ use App\Models\VesselPosition as Model;
 use App\DataTransferObjects\VesselPosition;
 use App\DataTransferObjects\Builders\VesselPositionBuilder;
 use App\DataTransferObjects\VesselTracksRequestData;
-use Carbon\Carbon;
 
 final class FetchVesselsPositionsRepository
 {
@@ -18,21 +17,21 @@ final class FetchVesselsPositionsRepository
      */
     public function get(VesselTracksRequestData $filters): array
     {
-        $query = Model::query();
+        $builder = Model::query();
 
-        if (filled($filters->vesselsIds)) {
-            $query->whereIn('vessel_id', array_map(fn (ResourceId $vesselId) => $vesselId->value, $filters->vesselsIds));
-        }
+        $builder->when(filled($filters->vesselsIds), function ($builder) use ($filters) {
+            $builder->whereIn('vessel_id', array_map(fn (ResourceId $vesselId) => $vesselId->value, $filters->vesselsIds));
+        });
 
-        if ($filters->hasRange) {
-            $query->whereBetween('latitude', [$filters->minLatitude->value, $filters->maxLatitude->value]);
-            $query->whereBetween('longitude', [$filters->minLongitude->value, $filters->maxLongitude->value]);
-        }
+        $builder->when($filters->hasRange, function ($builder) use ($filters) {
+            $builder->whereBetween('latitude', [$filters->minLatitude->value, $filters->maxLatitude->value]);
+            $builder->whereBetween('longitude', [$filters->minLongitude->value, $filters->maxLongitude->value]);
+        });
 
-        if ($filters->hasTimeInterval) {
-            $query->whereBetween('timestamp', [$filters->fromTime->timestamp, $filters->toTime->timestamp]);
-        }
+        $builder->when($filters->hasTimeInterval, function ($builder) use ($filters) {
+            $builder->whereBetween('timestamp', [$filters->fromTime->timestamp, $filters->toTime->timestamp]);
+        });
 
-        return $query->get()->map(fn (Model $model) => VesselPositionBuilder::fromModel($model)->build())->all();
+        return $builder->get()->map(fn (Model $model) => VesselPositionBuilder::fromModel($model)->build())->all();
     }
 }
