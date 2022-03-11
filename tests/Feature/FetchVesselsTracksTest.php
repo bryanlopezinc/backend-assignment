@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Timestamp;
 use Carbon\Carbon;
+use Illuminate\Testing\AssertableJsonString;
 use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
@@ -52,6 +53,27 @@ class FetchVesselsTracksTest extends TestCase
             ->assertHeader('Content-Type', 'application/xml');
 
         $this->assertStringStartsWith('<?xml version="1.0"?>', $response->baseResponse->content());
+
+        $xmlString = simplexml_load_string($response->baseResponse->content());
+
+        $data = json_decode(json_encode($xmlString), true);
+
+        $assert = new AssertableJsonString($data['vesselPosition']);
+
+        $assert->assertCount(2696)->assertStructure([
+            'mmsi',
+            'status',
+            'statationId',
+            'speed',
+            'coordinates' => [
+                'longitude',
+                'latitude',
+            ],
+            'course',
+            'heading',
+            'hasRateOfTurn',
+            'timestamp',
+        ], $data['vesselPosition'][0]);
     }
 
     public function testWillReturnVesselsTracksInCsvFormat(): void
