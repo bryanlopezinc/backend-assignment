@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Timestamp;
 use Carbon\Carbon;
+use Illuminate\Testing\Fluent\AssertableJson;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
@@ -16,7 +17,32 @@ class FetchVesselsTracksTest extends TestCase
 
     public function testWillReturnAllVesselsTracks(): void
     {
-        $this->getTestResponse()->assertSuccessful()->assertJsonCount(2696, 'data');
+        $response = $this->getTestResponse()
+            ->assertSuccessful()
+            ->assertJsonCount(2696, 'data')
+            ->assertJsonCount('9', 'data.0.attributes')
+            ->assertJson(function (AssertableJson $json) {
+                $json->where('data.0.attributes.has_rate_of_turn_data', false);
+                $json->etc();
+            });
+
+        $response->assertJsonStructure([
+            'type',
+            'attributes' => [
+                'mmsi',
+                'status',
+                'station_id',
+                'speed',
+                'coordinates' => [
+                    'longitude',
+                    'latitude',
+                ],
+                'course',
+                'heading',
+                'has_rate_of_turn_data',
+                'timestamp'
+            ]
+        ], $response->json('data.0'));
     }
 
     public function testWillReturnVesselsTracksInXmlFormat(): void
