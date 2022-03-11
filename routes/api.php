@@ -3,4 +3,4 @@
 use App\Http\Controllers\FetchVesselTracksController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('vesels/tracks', FetchVesselTracksController::class)->name('fetchVesselsTracks');
+Route::get('vessels/tracks', FetchVesselTracksController::class)->name('fetchVesselsTracks');
