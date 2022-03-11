@@ -30,7 +30,7 @@ class ResourceCollectionTest extends TestCase
                 <course>$vesselPosition->course</course>
                 <heading>$vesselPosition->heading</heading>
                 <hasRateOfTurn>false</hasRateOfTurn>
-                <timestamp>$vesselPosition->timestamp</timestamp>
+                <timestamp>{$vesselPosition->timestamp->toDate()}</timestamp>
             </vesselPosition>
         </data>
         XML;

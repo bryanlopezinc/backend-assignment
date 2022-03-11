@@ -48,7 +48,7 @@ final class ResourceCollection implements Responsable
             }
 
             $attributes->addChild('hasRateOfTurn', $vesselPosition->hasRateOfTurnData ? 'true' : 'false');
-            $attributes->addChild('timestamp', (string) $vesselPosition->timestamp);
+            $attributes->addChild('timestamp', $vesselPosition->timestamp->toDate());
         }
 
         return $xml;

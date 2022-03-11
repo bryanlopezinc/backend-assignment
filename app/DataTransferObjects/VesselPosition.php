@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\DataTransferObjects;
 
+use App\Timestamp;
 use App\ValueObjects\Latitude;
 use App\ValueObjects\Longitude;
 use App\ValueObjects\ResourceId;
@@ -21,7 +22,7 @@ final class VesselPosition
     public readonly int $heading;
     public readonly ?int $rateOfTurn;
     public readonly bool $hasRateOfTurnData;
-    public readonly int $timestamp;
+    public readonly Timestamp $timestamp;
 
     public function __construct(array $atrributes)
     {

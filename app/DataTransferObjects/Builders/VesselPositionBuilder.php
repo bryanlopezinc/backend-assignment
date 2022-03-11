@@ -6,6 +6,7 @@ namespace App\DataTransferObjects\Builders;
 
 use App\DataTransferObjects\VesselPosition;
 use App\Models\VesselPosition as Model;
+use App\Timestamp;
 use App\ValueObjects\Latitude;
 use App\ValueObjects\Longitude;
 use App\ValueObjects\ResourceId;
@@ -31,7 +32,7 @@ final class VesselPositionBuilder
         $attributes['heading'] = $model['heading'];
         $attributes['rateOfTurn'] = $model['rate_of_turn'];
         $attributes['hasRateOfTurnData'] = filled($model['rate_of_turn']);
-        $attributes['timestamp'] = $model['timestamp'];
+        $attributes['timestamp'] = new Timestamp($model['timestamp']);
 
         return new self($attributes);
     }

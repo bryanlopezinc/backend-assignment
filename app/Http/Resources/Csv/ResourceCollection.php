@@ -46,7 +46,7 @@ final class ResourceCollection
                 'Heading'      => $vesselPosition->heading,
                 'RateOfTurn'   => $vesselPosition->rateOfTurn,
                 'HasRateOfTurnData' => $vesselPosition->hasRateOfTurnData ? 'true' : 'false',
-                'Timestamp'    => $vesselPosition->timestamp
+                'Timestamp'    => $vesselPosition->timestamp->toDate()
             ]);
         }
 

@@ -34,7 +34,7 @@ final class VesselPositionResource extends JsonResource
                 'heading'      => $this->vesselPosition->heading,
                 'rate_of_turn' => $this->when($this->vesselPosition->hasRateOfTurnData, $this->vesselPosition->rateOfTurn),
                 'has_rate_of_turn_data' => $this->vesselPosition->hasRateOfTurnData,
-                'timestamp'    => $this->vesselPosition->timestamp
+                'timestamp'    => $this->vesselPosition->timestamp->toDate()
             ]
         ];
     }
