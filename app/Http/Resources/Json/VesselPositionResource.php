@@ -27,8 +27,8 @@ final class VesselPositionResource extends JsonResource
                 'station_id' => $this->vesselPosition->stationId->value,
                 'speed'      => $this->vesselPosition->speed,
                 'coordinates' => [
-                    'longitude' => $this->vesselPosition->coordinates->longitude,
-                    'latitude'  => $this->vesselPosition->coordinates->latitude,
+                    'longitude' => $this->vesselPosition->longitude,
+                    'latitude'  => $this->vesselPosition->latitude,
                 ],
                 'course'       => $this->vesselPosition->course,
                 'heading'      => $this->vesselPosition->heading,

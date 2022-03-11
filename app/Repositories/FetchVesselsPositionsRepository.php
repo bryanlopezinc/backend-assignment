@@ -24,7 +24,8 @@ final class FetchVesselsPositionsRepository
         }
 
         if ($filters->hasRange) {
-            $query->where('latitude', '>=', $filters->range->latitude)->where('longitude', '<=', $filters->range->longitude);
+            $query->whereBetween('latitude', [$filters->minLatitude->value, $filters->maxLatitude->value]);
+            $query->whereBetween('longitude', [$filters->minLongitude->value, $filters->maxLongitude->value]);
         }
 
         if ($filters->hasTimeInterval) {

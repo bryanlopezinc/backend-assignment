@@ -6,7 +6,8 @@ namespace App\DataTransferObjects\Builders;
 
 use App\DataTransferObjects\VesselPosition;
 use App\Models\VesselPosition as Model;
-use App\ValueObjects\Coordinates;
+use App\ValueObjects\Latitude;
+use App\ValueObjects\Longitude;
 use App\ValueObjects\ResourceId;
 use App\ValueObjects\Status;
 
@@ -24,7 +25,8 @@ final class VesselPositionBuilder
         $attributes['status'] = new Status($model['status']);
         $attributes['stationId'] = new ResourceId($model['station_id']);
         $attributes['speed'] = $model['speed'];
-        $attributes['coordinates'] = new Coordinates($model['latitude'], $model['longitude']);
+        $attributes['latitude'] = new Latitude($model['latitude']);
+        $attributes['longitude'] = new Longitude($model['longitude']);
         $attributes['course'] = $model['course'];
         $attributes['heading'] = $model['heading'];
         $attributes['rateOfTurn'] = $model['rate_of_turn'];

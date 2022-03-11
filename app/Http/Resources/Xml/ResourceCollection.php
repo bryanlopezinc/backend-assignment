@@ -37,8 +37,8 @@ final class ResourceCollection implements Responsable
             $attributes->addChild('speed', (string) $vesselPosition->speed);
 
             $coordinates = $attributes->addChild('coordinates');
-            $coordinates->addChild('longitude', $vesselPosition->coordinates->longitude);
-            $coordinates->addChild('latitude', $vesselPosition->coordinates->latitude);
+            $coordinates->addChild('longitude', $vesselPosition->longitude->value);
+            $coordinates->addChild('latitude', $vesselPosition->latitude->value);
 
             $attributes->addChild('course', (string) $vesselPosition->course);
             $attributes->addChild('heading', (string) $vesselPosition->heading);

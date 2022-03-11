@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\DataTransferObjects;
 
-use App\ValueObjects\Coordinates;
+use App\ValueObjects\Latitude;
+use App\ValueObjects\Longitude;
 use App\ValueObjects\ResourceId;
 use App\ValueObjects\Status;
 
@@ -14,7 +15,8 @@ final class VesselPosition
     public readonly Status $status;
     public readonly ResourceId $stationId;
     public readonly int $speed;
-    public readonly Coordinates $coordinates;
+    public readonly Latitude $latitude;
+    public readonly Longitude $longitude;
     public readonly int $course;
     public readonly int $heading;
     public readonly ?int $rateOfTurn;

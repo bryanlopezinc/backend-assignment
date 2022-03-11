@@ -43,8 +43,19 @@ class FetchVesselsTracksTest extends TestCase
 
     public function testWillReturnValidationErrorsIfCoordinatesAttributesAreInvalid(): void
     {
-        $this->getTestResponse(['lon' => '15.44150000'])->assertUnprocessable()->assertJsonValidationErrorFor('lat');
-        $this->getTestResponse(['lat' => '15.44150000'])->assertUnprocessable()->assertJsonValidationErrorFor('lon');
+        $attributes = ['lon_min', 'lon_max', 'lat_min', 'lat_max'];
+
+        foreach ($attributes as $key => $attribute) {
+            $new = $attributes;
+
+            $response = $this->getTestResponse([$attribute => '15.44150000'])->assertUnprocessable();
+
+            unset($new[$key]);
+
+            foreach ($new as $value) {
+                $response->assertJsonValidationErrorFor($value);
+            }
+        }
     }
 
     public function testWillReturnValidationErrorsIfTimeAttributesAreInvalid(): void
@@ -63,7 +74,12 @@ class FetchVesselsTracksTest extends TestCase
 
     public function testWillReturnVesselTracksWithinCoordinates(): void
     {
-        $this->getTestResponse(['lat' => '42.75178000', 'lon' => '15.44150000'])->assertSuccessful()->assertJsonCount(176, 'data');
+        $this->getTestResponse([
+            'lat_min' => '40.68598000',
+            'lat_max' => '41.45607000',
+            'lon_min' => '14.35212000',
+            'lon_max' => '18.99567000'
+        ])->assertSuccessful()->assertJsonCount(269, 'data');
     }
 
     public function testWillReturnVesselTracksWithinTimeInterval(): void

@@ -24,8 +24,8 @@ class ResourceCollectionTest extends TestCase
                 <statationId>{$vesselPosition->stationId->value}</statationId>
                 <speed>$vesselPosition->speed</speed>
                 <coordinates>
-                    <longitude>{$vesselPosition->coordinates->longitude}</longitude>
-                    <latitude>{$vesselPosition->coordinates->latitude}</latitude>
+                    <longitude>{$vesselPosition->longitude->value}</longitude>
+                    <latitude>{$vesselPosition->latitude->value}</latitude>
                 </coordinates>
                 <course>$vesselPosition->course</course>
                 <heading>$vesselPosition->heading</heading>
